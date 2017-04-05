@@ -1,0 +1,14 @@
+{
+    "name": "calderawp/user-exists",
+    "description": "A WordPress REST API route to check if email is registered",
+    "type": "wordpress-plugin",
+    "license": "GPLv2+",
+    "authors": [
+        {
+            "name": "Josh Pollock",
+            "email": "Josh@CalderaWP.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
