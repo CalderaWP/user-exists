@@ -13,10 +13,20 @@ add_action( 'rest_api_init', function(){
 			]
 		],
 		'callback' => function( $request ){
-			if( is_email( $request[ 'email' ] ) && is_numeric( email_exists( $request[ 'email' ] ) ) ){
-				return true;
+			$pre_serve = apply_filters( 'user_exists_pre_check', $request );
+			if( is_wp_error( $pre_serve ) ){
+				return rest_ensure_response( $pre_serve );
 			}
-			return false;
+			if( is_email( $request[ 'email' ] ) && is_numeric( email_exists( $request[ 'email' ] ) ) ){
+				return rest_ensure_response( [ 'exists' => true ] );
+			}
+			/**
+			 * Fires when user exist check fails
+			 *
+			 * @param $request WP_REST_Request Current request
+			 */
+			do_action( 'user_exits_failed', $request );
+			return rest_ensure_response( [ 'exists' => false ] );
 
 		}
 	]);
